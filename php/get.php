@@ -93,7 +93,7 @@
     <div class="main">
 
         <div class="form-box">
-            <h2>Login</h2>
+            <h2>Login (GET)</h2>
 
             <form name="loginForm" method="get" onsubmit="return validateForm()">
 
