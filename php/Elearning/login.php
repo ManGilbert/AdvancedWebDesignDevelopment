@@ -8,13 +8,23 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    if ($username == "Admin" && $password == "1234") {
+    $file = "users.txt";
 
-        $_SESSION['username'] = $username;
+    if (file_exists($file)) {
 
-        header("Location: index.php");
-        exit();
-    } else {
+        $users = file($file);
+
+        foreach ($users as $user) {
+
+            list($stored_user, $stored_pass) = explode(",", trim($user));
+
+            if ($username == $stored_user && $password == $stored_pass) {
+
+                $_SESSION['username'] = $username;
+                header("Location: index.php");
+                exit();
+            }
+        }
 
         $error = "Invalid Username or Password";
     }
@@ -29,10 +39,9 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: Arial;
             background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb');
             background-size: cover;
-            background-position: center;
             margin: 0;
         }
 
@@ -76,32 +85,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
             border-radius: 5px;
             cursor: pointer;
         }
-
-        button:hover {
-            background: #1e7e34;
-        }
     </style>
-
-    <script>
-        function validateForm() {
-
-            var username = document.forms["loginForm"]["username"].value;
-            var password = document.forms["loginForm"]["password"].value;
-
-            if (username == "") {
-                alert("Username is required");
-                return false;
-            }
-
-            if (password == "") {
-                alert("Password is required");
-                return false;
-            }
-
-            return true;
-        }
-    </script>
-
 </head>
 
 <body>
@@ -110,13 +94,13 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 
         <div class="form-box">
 
-            <h2>Login (POST)</h2>
+            <h2>Login</h2>
 
-            <form name="loginForm" method="post" onsubmit="return validateForm()">
+            <form method="post">
 
-                <input type="text" name="username" placeholder="Enter Username">
+                <input type="text" name="username" placeholder="Username" required>
 
-                <input type="password" name="password" placeholder="Enter Password">
+                <input type="password" name="password" placeholder="Password" required>
 
                 <button type="submit">Login</button>
 
@@ -129,14 +113,16 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
             <h2>Login Result</h2>
 
             <?php
-
             if ($error != "") {
                 echo $error;
             } else {
                 echo "Please login to continue.";
             }
-
             ?>
+
+            <p>Don't have an account?
+                <a style="color:yellow" href="signup.php">Create Account</a>
+            </p>
 
         </div>
 

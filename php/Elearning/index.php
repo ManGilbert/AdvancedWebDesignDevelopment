@@ -172,7 +172,7 @@ if (!isset($_SESSION['username'])) {
                             </a>
 
                             <button class="enroll-btn">
-                                <i class="bi bi-mortarboard"></i> Enroll
+                                <i class="bi bi-mortarboard"></i> Learn More
                             </button>
 
                         </div>
@@ -215,7 +215,7 @@ if (!isset($_SESSION['username'])) {
                             </a>
 
                             <button class="enroll-btn">
-                                <i class="bi bi-mortarboard"></i> Enroll
+                                <i class="bi bi-mortarboard"></i> Learn More
                             </button>
 
                         </div>
@@ -258,7 +258,7 @@ if (!isset($_SESSION['username'])) {
                             </a>
 
                             <button class="enroll-btn">
-                                <i class="bi bi-mortarboard"></i> Enroll
+                                <i class="bi bi-mortarboard"></i> Learn More
                             </button>
 
                         </div>
@@ -301,7 +301,7 @@ if (!isset($_SESSION['username'])) {
                             </a>
 
                             <button class="enroll-btn">
-                                <i class="bi bi-mortarboard"></i> Enroll
+                                <i class="bi bi-mortarboard"></i> Learn More
                             </button>
 
                         </div>
@@ -344,7 +344,7 @@ if (!isset($_SESSION['username'])) {
                             </a>
 
                             <button class="enroll-btn">
-                                <i class="bi bi-mortarboard"></i> Enroll
+                                <i class="bi bi-mortarboard"></i> Learn More
                             </button>
 
                         </div>
@@ -387,7 +387,7 @@ if (!isset($_SESSION['username'])) {
                             </a>
 
                             <button class="enroll-btn">
-                                <i class="bi bi-mortarboard"></i> Enroll
+                                <i class="bi bi-mortarboard"></i> Learn More
                             </button>
 
                         </div>
