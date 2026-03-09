@@ -1,12 +1,3 @@
-<?php
-session_start();
-
-if (!isset($_SESSION['username'])) {
-    header("Location: login.php");
-    exit();
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -114,10 +105,15 @@ if (!isset($_SESSION['username'])) {
                             <i class="bi bi-house"></i> Home
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="signup.php">
+                            Sign Up
+                        </a>
+                    </li>
 
                     <li class="nav-item">
-                        <a class="nav-link text-danger" href="logout.php">
-                            <i class="bi bi-box-arrow-right"></i> Logout
+                        <a class="nav-link" href="login.php">
+                            Log In
                         </a>
                     </li>
 
@@ -156,7 +152,6 @@ if (!isset($_SESSION['username'])) {
 
                         <div class="d-flex justify-content-between mb-2">
 
-                            <span>⭐ 4.8 (120 Reviews)</span>
                             <span class="text-success">Backend</span>
 
                         </div>
@@ -199,7 +194,6 @@ if (!isset($_SESSION['username'])) {
 
                         <div class="d-flex justify-content-between mb-2">
 
-                            <span>⭐ 4.7 (95 Reviews)</span>
                             <span class="text-primary">Web Dev</span>
 
                         </div>
@@ -242,7 +236,6 @@ if (!isset($_SESSION['username'])) {
 
                         <div class="d-flex justify-content-between mb-2">
 
-                            <span>⭐ 4.6 (70 Reviews)</span>
                             <span class="text-info">Frontend</span>
 
                         </div>
@@ -285,7 +278,6 @@ if (!isset($_SESSION['username'])) {
 
                         <div class="d-flex justify-content-between mb-2">
 
-                            <span>⭐ 4.8 (110 Reviews)</span>
                             <span class="text-success">Programming</span>
 
                         </div>
@@ -328,7 +320,6 @@ if (!isset($_SESSION['username'])) {
 
                         <div class="d-flex justify-content-between mb-2">
 
-                            <span>⭐ 4.9 (200 Reviews)</span>
                             <span class="text-warning">Frontend</span>
 
                         </div>
@@ -371,7 +362,6 @@ if (!isset($_SESSION['username'])) {
 
                         <div class="d-flex justify-content-between mb-2">
 
-                            <span>⭐ 4.7 (85 Reviews)</span>
                             <span class="text-success">Backend</span>
 
                         </div>

@@ -27,7 +27,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     <style>
         body {
             font-family: Arial;
-            background-image: url('https://images.unsplash.com/photo-1498050108023-c5249f4df085');
+            background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb');
             background-size: cover;
             margin: 0;
         }
