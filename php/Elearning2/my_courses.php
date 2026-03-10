@@ -1,5 +1,5 @@
 <?php
-require 'db.php';
+require 'connection/db.php';
 session_start();
 
 // Only logged-in students
@@ -64,7 +64,7 @@ $result = $stmt->get_result();
 </head>
 <body>
 
-<?php include 'header.php'; ?>
+<?php include 'headers/header.php'; ?>
 
 <div class="container mt-5">
     <h2 class="mb-4">My Enrolled Courses</h2>
@@ -142,7 +142,7 @@ $result = $stmt->get_result();
     </div>
 </div>
 
-<?php include 'footer.php'; ?>
+<?php include 'headers/footer.php'; ?>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>

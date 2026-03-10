@@ -1,5 +1,5 @@
 <?php
-require 'db.php';
+require 'connection/db.php';
 session_start();
 
 // Only logged-in students can enroll

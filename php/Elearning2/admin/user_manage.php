@@ -1,5 +1,5 @@
 <?php
-require 'db.php';
+require '../connection/db.php';
 session_start();
 
 // Only admin
@@ -21,7 +21,7 @@ $totalUsers = $totalRow['total'];
 $totalPages = ceil($totalUsers / $limit);
 
 // Fetch users
-$sql = "SELECT * FROM users ORDER BY created_at DESC LIMIT ?, ?";
+$sql = "SELECT * FROM users WHERE role = 'student' ORDER BY created_at DESC LIMIT ?, ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("ii", $start, $limit);
 $stmt->execute();
@@ -49,10 +49,10 @@ $result = $stmt->get_result();
 </style>
 </head>
 <body>
-<?php include 'header.php'; ?>
+<?php include '../headers/header.php'; ?>
 
 <div class="container mt-5">
-    <h2 class="mb-4">Users Management</h2>
+    <h2 class="mb-4">Users Manage</h2>
 
     <?php if (isset($_SESSION['error'])): ?>
         <div class="alert alert-danger"><?= $_SESSION['error']; unset($_SESSION['error']); ?></div>
@@ -144,6 +144,6 @@ userCards.forEach(card => {
     });
 });
 </script>
-
+<?php include '../headers/footer.php'; ?>
 </body>
 </html>
