@@ -15,14 +15,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Prepare SQL to prevent SQL injection
-    $stmt = $conn->prepare("SELECT id, full_name, password, role FROM users WHERE email=?");
+    $stmt = $conn->prepare("SELECT id, full_name, password, role, status FROM users WHERE email=?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $stmt->store_result();
 
     if ($stmt->num_rows === 1) {
-        $stmt->bind_result($id, $full_name, $db_password, $role);
+        $stmt->bind_result($id, $full_name, $db_password, $role, $status);
         $stmt->fetch();
+
+        // Check if user is blocked
+        if ($status === 'blocked') {
+            $_SESSION['error'] = "Your account is blocked! Please contact admin.";
+            $stmt->close();
+            header("Location: index.php");
+            exit();
+        }
 
         // Direct comparison since passwords are plain text
         if ($password === $db_password) {

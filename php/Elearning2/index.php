@@ -1,33 +1,44 @@
 <?php
 require 'db.php';
-// Fetch all courses from database
+
+// Fetch all courses for listing
 $sql = "SELECT * FROM courses ORDER BY created_at DESC";
 $result = $conn->query($sql);
+
+// Fetch last 3 courses for slider
+$sliderSql = "SELECT * FROM courses ORDER BY created_at DESC LIMIT 3";
+$sliderResult = $conn->query($sliderSql);
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Programming Courses</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <style>
-        body { background: #f4f6f9; font-family: Segoe UI; }
-        .navbar { box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        .course-card { border: none; border-radius: 14px; overflow: hidden; transition: 0.3s; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
-        .course-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 12px 30px rgba(0,0,0,0.2); }
-        .course-card img { height: 200px; object-fit: cover; }
-        .youtube-btn { color: #ff0000; font-weight: 500; text-decoration: none; }
-        .youtube-btn:hover { color: #cc0000; }
-        .enroll-btn { background: #198754; color: white; border: none; padding: 6px 14px; border-radius: 6px; }
-        .enroll-btn:hover { background: #157347; }
-        footer { background: #2d3436; color: white; padding: 18px; text-align: center; margin-top: 50px; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Programming Courses</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+<style>
+body { background: #f4f6f9; font-family: Segoe UI; }
+.navbar { box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); }
+.course-card {
+    border: none; border-radius: 14px; overflow: hidden; transition: 0.3s;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+.course-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 12px 30px rgba(0,0,0,0.2); }
+.course-card img { height: 200px; object-fit: cover; }
+.youtube-btn { color: #ff0000; font-weight: 500; text-decoration: none; }
+.youtube-btn:hover { color: #cc0000; }
+.enroll-btn { background: #198754; color: white; border: none; padding: 6px 14px; border-radius: 6px; }
+.enroll-btn:hover { background: #157347; }
+footer { background: #2d3436; color: white; padding: 18px; text-align: center; margin-top: 50px; }
+.carousel-item img { height: 400px; object-fit: cover; border-radius: 14px; }
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: invert(1); /* inverts the default white arrow to black */
+}
+</style>
 </head>
-
 <body>
 
 <?php include 'header.php'; ?>
@@ -41,23 +52,42 @@ $result = $conn->query($sql);
 <?php endif; ?>
 
 <script>
-// Wait for page to load
-window.addEventListener('DOMContentLoaded', (event) => {
-    // Select the alert message
+window.addEventListener('DOMContentLoaded', () => {
     const alertBox = document.getElementById('alertMessage');
-    if(alertBox){
-        // Hide the alert after 6 seconds (6000 ms)
-        setTimeout(() => {
-            alertBox.style.transition = "opacity 0.5s ease";
-            alertBox.style.opacity = '0';
-            // Remove the element from DOM after fade out
-            setTimeout(() => alertBox.remove(), 500);
-        }, 6000);
+    if(alertBox) {
+        setTimeout(() => { alertBox.style.transition = "opacity 0.5s"; alertBox.style.opacity='0';
+        setTimeout(() => alertBox.remove(), 500); }, 6000);
     }
 });
 </script>
 
 <div class="container mt-5">
+
+    <!-- Slider for last 3 courses -->
+    <?php if($sliderResult->num_rows > 0): ?>
+    <div id="courseCarousel" class="carousel slide mb-5" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <?php $active = 'active'; ?>
+            <?php while($slide = $sliderResult->fetch_assoc()): ?>
+            <div class="carousel-item <?= $active ?>">
+                <img src="uploads/<?= !empty($slide['image_url']) ? htmlspecialchars($slide['image_url']) : 'default.png' ?>" class="d-block w-100" alt="<?= htmlspecialchars($slide['name']) ?>">
+                <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
+                    <h5><?= htmlspecialchars($slide['name']) ?></h5>
+                    <p><?= htmlspecialchars($slide['description']) ?></p>
+                </div>
+            </div>
+            <?php $active = ''; endwhile; ?>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#courseCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#courseCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
+    <?php endif; ?>
+
+    <!-- All courses listing -->
     <div class="text-center mb-5">
         <h2 class="fw-bold">Programming Courses</h2>
         <p class="text-muted">Choose your favorite programming course</p>
@@ -67,7 +97,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         <?php while ($course = $result->fetch_assoc()): ?>
         <div class="col-md-4">
             <div class="card course-card">
-                <img src="<?= $course['image_url'] ?>" class="card-img-top">
+                <img src="uploads/<?= !empty($course['image_url']) ? htmlspecialchars($course['image_url']) : 'default.png' ?>" class="card-img-top" alt="<?= htmlspecialchars($course['name']) ?>">
                 <div class="card-body">
                     <h5><?= $course['name'] ?></h5>
                     <p class="text-muted small"><?= $course['description'] ?></p>
@@ -114,24 +144,24 @@ window.addEventListener('DOMContentLoaded', (event) => {
 </div>
 
 <footer>
-    <p>© 2026 Programming Courses | All Rights Reserved</p>
+    <p>© <?= date('Y') ?> Programming Courses | All Rights Reserved</p>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    const videoLinks = document.querySelectorAll(".watch-video");
-    const videoFrame = document.getElementById("youtubeVideo");
+const videoLinks = document.querySelectorAll(".watch-video");
+const videoFrame = document.getElementById("youtubeVideo");
 
-    videoLinks.forEach(link => {
-        link.addEventListener("click", function() {
-            videoFrame.src = this.getAttribute("data-video");
-        });
+videoLinks.forEach(link => {
+    link.addEventListener("click", function() {
+        videoFrame.src = this.getAttribute("data-video");
     });
+});
 
-    const modal = document.getElementById('videoModal');
-    modal.addEventListener('hidden.bs.modal', function() {
-        videoFrame.src = "";
-    });
+const modal = document.getElementById('videoModal');
+modal.addEventListener('hidden.bs.modal', function() {
+    videoFrame.src = "";
+});
 </script>
 
 </body>

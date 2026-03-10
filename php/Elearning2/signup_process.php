@@ -2,19 +2,27 @@
 require 'db.php';
 session_start();
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $full_name = trim($_POST['full_name'] ?? '');
     $email = trim($_POST['email'] ?? '');
-    $password = $_POST['password'] ?? ''; // plain text password
+    $password = $_POST['password'] ?? '';
+    $confirm_password = $_POST['confirm_password'] ?? '';
 
-    // Check if any field is empty
-    if ($full_name === '' || $email === '' || $password === '') {
+    // 1. Check if fields are empty
+    if ($full_name === '' || $email === '' || $password === '' || $confirm_password === '') {
         $_SESSION['error'] = "Please fill in all fields!";
         header("Location: index.php");
         exit();
     }
 
-    // Check if email already exists
+    // 2. Check if passwords match
+    if ($password !== $confirm_password) {
+        $_SESSION['error'] = "Passwords do not match!";
+        header("Location: index.php");
+        exit();
+    }
+
+    // 3. Check if email already exists
     $stmt = $conn->prepare("SELECT id FROM users WHERE email=?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -28,13 +36,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     $stmt->close();
 
-    // Insert new user with plain text password
-    $stmt = $conn->prepare("INSERT INTO users (full_name, email, password, role) VALUES (?, ?, ?, 'student')");
+    // 4. Insert new user with plain text password
+    $stmt = $conn->prepare("INSERT INTO users (full_name, email, password, role, status) VALUES (?, ?, ?, 'student', 'active')");
     $stmt->bind_param("sss", $full_name, $email, $password);
-    $stmt->execute();
-    $stmt->close();
 
-    $_SESSION['success'] = "Signup successful! Please login.";
+    if ($stmt->execute()) {
+        $_SESSION['success'] = "Signup successful! You can log in now.";
+    } else {
+        $_SESSION['error'] = "Database error: " . $stmt->error;
+    }
+
+    $stmt->close();
     header("Location: index.php");
     exit();
 }

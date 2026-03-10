@@ -87,6 +87,10 @@ if (session_status() === PHP_SESSION_NONE) {
             <label>Password</label>
             <input type="password" name="password" class="form-control" required>
           </div>
+          <div class="mb-3">
+            <label>Confirm Password</label>
+            <input type="password" name="confirm_password" class="form-control" required>
+          </div>
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Sign Up</button>
