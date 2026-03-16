@@ -1,4 +1,4 @@
-fetch("api.php")
+fetch("http://localhost:8000/api/api.php")
 .then(response => response.json())
 .then(data => {
 
