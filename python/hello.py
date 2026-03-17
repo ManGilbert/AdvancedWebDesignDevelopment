@@ -52,7 +52,7 @@ print(celsius2)
 
 temp3 = 50
 celsius3 = (temp3 - 32) * 5 / 9
-print(celsius3)  """
+print(celsius3)  
 
 x = 300
 
@@ -64,3 +64,5 @@ myfunc()
 myfunc()
 
 print(x)
+"""
+
