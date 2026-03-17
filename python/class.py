@@ -1,8 +1,12 @@
-class point():
-    def __init__(self, input1, input2):
-        self.x =input1
-        self.x =input2
-p = point(2,6)
-l = point(3,4)
-print(p.x)
-print(l.x)
+class Coordinate:
+    def __init__(self, x_coord, y_coord):
+        self.x = x_coord
+        self.y = y_coord
+
+pointA = Coordinate(2, 6)
+pointB = Coordinate(3, 4)
+
+print(pointA.x)
+print(pointA.y)
+print(pointB.x)
+print(pointB.y)
