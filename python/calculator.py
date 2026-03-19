@@ -1,45 +1,58 @@
-def add(x, y):
-    return x + y
+class SmartCalc:
+    def __init__(self):
+        self.actions = {
+            "1": ("Add", self._sum),
+            "2": ("Minus", self._difference),
+            "3": ("Times", self._product),
+            "4": ("Divide", self._quotient)
+        }
 
-def subtract(x, y):
-    return x - y
+    def _sum(self, a, b):
+        return a + b
 
-def multiply(x, y):
-    return x * y
+    def _difference(self, a, b):
+        return a - b
 
-def divide(x, y):
-    if y == 0:
-        return "Error: Division by zero"
-    return x / y
+    def _product(self, a, b):
+        return a * b
 
-def calculator():
-    print("Simple Calculator")
-    print("Select operation: +, -, *, /")
-    
-    while True:
-        operation = input("Enter operation (or 'quit' to exit): ").strip()
-        
-        if operation.lower() == 'quit':
-            break
-        
-        if operation not in ['+', '-', '*', '/']:
-            print("Invalid operation. Please select +, -, *, or /")
-            continue
-        
-        try:
-            num1 = float(input("Enter first number: "))
-            num2 = float(input("Enter second number: "))
-            
-            if operation == '+':
-                print(f"Result: {add(num1, num2)}\n")
-            elif operation == '-':
-                print(f"Result: {subtract(num1, num2)}\n")
-            elif operation == '*':
-                print(f"Result: {multiply(num1, num2)}\n")
-            elif operation == '/':
-                print(f"Result: {divide(num1, num2)}\n")
-        except ValueError:
-            print("Invalid input. Please enter numeric values.\n")
+    def _quotient(self, a, b):
+        if b == 0:
+            return "Cannot divide by zero!"
+        return a / b
+
+    def run(self):
+        print("=== Smart Calculator ===")
+
+        while True:
+            print("\nChoose operation:")
+            for key, (name, _) in self.actions.items():
+                print(f"{key}: {name}")
+            print("0: Exit")
+
+            choice = input("Enter choice: ").strip()
+
+            if choice == "0":
+                print("Goodbye")
+                break
+
+            if choice not in self.actions:
+                print("Invalid choice. Try again.")
+                continue
+
+            try:
+                x = float(input("Enter first number: "))
+                y = float(input("Enter second number: "))
+
+                operation_name, func = self.actions[choice]
+                result = func(x, y)
+
+                print(f"{operation_name} Result = {result}")
+
+            except ValueError:
+                print("Please enter valid numbers.")
+
 
 if __name__ == "__main__":
-    calculator()
+    calc_app = SmartCalc()
+    calc_app.run()

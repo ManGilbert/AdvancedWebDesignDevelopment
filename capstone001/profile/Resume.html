@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Resume</title>
+
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+    :root {
+        --bg: linear-gradient(to right, #667eea, #764ba2);
+        --text: #333;
+        --card: #fff;
+        --primary: #667eea;
+    }
+
+    body.dark {
+        --bg: #121212;
+        --text: #eee;
+        --card: #1e1e1e;
+        --primary: #bb86fc;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        transition: 0.3s;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: auto;
+        padding: 20px;
+    }
+
+    h1 {
+        text-align: center;
+        color: white;
+    }
+
+    .toggle-btn {
+        display: block;
+        margin: 10px auto 20px;
+        padding: 10px 20px;
+        border: none;
+        background: var(--primary);
+        color: white;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    .card {
+        background: var(--card);
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .profile {
+        text-align: center;
+    }
+
+    .profile img {
+        width: 130px;
+        height: 130px;
+        border-radius: 50%;
+        border: 3px solid var(--primary);
+    }
+
+    .bio {
+        margin-top: 10px;
+    }
+
+    .social a {
+        margin: 0 10px;
+        color: var(--primary);
+        font-size: 22px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th {
+        background: var(--primary);
+        color: white;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: center;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .btn {
+        display: inline-block;
+        margin: 10px;
+        padding: 12px 18px;
+        background: var(--primary);
+        color: white;
+        border-radius: 6px;
+        text-decoration: none;
+    }
+
+    .btn:hover {
+        opacity: 0.8;
+    }
+
+    @media(max-width:600px) {
+        .profile img {
+            width: 90px;
+            height: 90px;
+        }
+    }
+</style>
+
+
+</head>
+<body>
+<div class="container">
+<h1>My Resume</h1>
+<!-- Dark Mode Button --> <button class="toggle-btn" onclick="toggleDarkMode()">🌙 Toggle Dark Mode</button> <!-- Profile -->
+<div class="card profile"><img src="profile.jpeg" alt="Profile Picture" />
+<div class="bio">
+<p><strong>Bio: </strong>I am a passionate IT student specializing in Advanced Java Programming, Advanced Web Design &amp; Development, Python, and Django, with strong interests in building secure and scalable web applications.</p>
+</div>
+<div class="social"><a href="https://www.linkedin.com" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i></a> <a href="https://github.com/ManGilbert/AdvancedWebDesignDevelopment" target="_blank" rel="noopener"><i class="fab fa-github"></i></a></div>
+</div>
+<!-- Transcripts -->
+<div class="card">
+<h2 style="text-align: center;">Year 4 Transcripts</h2>
+<table>
+<tbody>
+<tr>
+<th>Module</th>
+<th>Marks (%)</th>
+<th>Grade</th>
+</tr>
+<tr>
+<td>Advanced Java Programming</td>
+<td>85</td>
+<td>A</td>
+</tr>
+<tr>
+<td>Advanced Web Design &amp; Development</td>
+<td>88</td>
+<td>A</td>
+</tr>
+<tr>
+<td>Python</td>
+<td>82</td>
+<td>A</td>
+</tr>
+<tr>
+<td>Django</td>
+<td>80</td>
+<td>A</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Projects -->
+<div class="card" style="text-align: center;">
+<h2>My Projects</h2>
+<a href="https://capstone001.great-site.net/blood_api/docs/" target="_blank" class="btn" rel="noopener"> <i class="fas fa-book"></i>  Blood API Docs </a> <a href="https://capstone001.great-site.net/blood_api/dashboard/" target="_blank" class="btn" rel="noopener"> <i class="fas fa-chart-line"></i> Blood API system</a> <a href="https://capstone001.great-site.net/Elearning2/" target="_blank" class="btn" rel="noopener"> <i class="fas fa-graduation-cap"></i> E-Learning System </a> <a href="https://github.com/ManGilbert/AdvancedWebDesignDevelopment" target="_blank" class="btn" rel="noopener"> <i class="fab fa-github"></i> GitHub Repo </a></div>
+</div>
+<p>
+<script>
+    function toggleDarkMode() {
+        document.body.classList.toggle("dark");
+    }
+</script>
+</p>
+</body>
+</html>
