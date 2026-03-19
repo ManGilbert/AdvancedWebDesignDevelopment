@@ -18,13 +18,3 @@ for item in products:
     if item["in_stock"]:
         print(item["name"], item["price"])
 """
-
-- what is product name
-- what is the price of the product
-- is the product in stock?
-- what is the product category
-- what is the brand of the product
-- how meny iterm are avilable 
-- what is descount on the product
-- what is the found price atfer discount
-- what is the product id?)
