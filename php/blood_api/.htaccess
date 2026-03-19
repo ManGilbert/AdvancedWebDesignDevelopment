@@ -1,0 +1,42 @@
+RewriteEngine On
+
+# ======================
+# PRESERVE AUTH HEADER
+# ======================
+RewriteCond %{HTTP:Authorization} .
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+# ======================
+# API ROUTES (ORDER MATTERS 🔥)
+# ======================
+
+# Login API
+RewriteRule ^api/login/?$ api/login.php [L,QSA]
+
+# 🔍 SEARCH (MUST COME BEFORE donors)
+RewriteRule ^api/donors/search/?$ api/donors.php [L,QSA]
+
+# Donor by ID (PUT, DELETE)
+RewriteRule ^api/donors/([0-9]+)$ api/donors.php?id=$1 [L,QSA]
+
+# Donors (GET, POST)
+RewriteRule ^api/donors/?$ api/donors.php [L,QSA]
+
+# Emergency donors
+RewriteRule ^api/emergency-donors/?$ api/emergency.php [L,QSA]
+
+# ======================
+# SYSTEM PAGES
+# ======================
+
+RewriteRule ^login$ dashboard/login.php [L,QSA]
+RewriteRule ^dashboard$ dashboard/index.php [L,QSA]
+RewriteRule ^add-donor$ dashboard/add_donor.php [L,QSA]
+RewriteRule ^edit-donor$ dashboard/edit_donor.php [L,QSA]
+RewriteRule ^delete-donor$ dashboard/delete_donor.php [L,QSA]
+
+# ======================
+# SAFE .php REMOVAL
+# ======================
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^([^/]+)$ $1.php [L]

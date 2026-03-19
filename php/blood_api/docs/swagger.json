@@ -1,0 +1,151 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Blood Donor Management API",
+    "version": "2.0.0",
+    "description": "API for managing blood donors"
+  },
+  "servers": [
+    {
+      "url": "http://localhost/blood_api/api"
+    }
+  ],
+  "paths": {
+
+    "/donors": {
+      "get": {
+        "summary": "Get all donors",
+        "responses": {
+          "200": {
+            "description": "List of donors"
+          }
+        }
+      },
+      "post": {
+        "summary": "Add new donor",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Donor"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Donor created"
+          }
+        }
+      }
+    },
+
+    "/donors/search": {
+      "get": {
+        "summary": "Search donors",
+        "description": "Filter donors by blood type, city, or name",
+        "parameters": [
+          {
+            "name": "blood_type",
+            "in": "query",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "city",
+            "in": "query",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Filtered donors"
+          }
+        }
+      }
+    },
+
+    "/donors/{id}": {
+      "put": {
+        "summary": "Update donor",
+        "security": [
+          { "BearerAuth": [] }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Donor"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated"
+          }
+        }
+      },
+
+      "delete": {
+        "summary": "Delete donor",
+        "security": [
+          { "BearerAuth": [] }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deleted"
+          }
+        }
+      }
+    }
+  },
+
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization"
+      }
+    },
+
+    "schemas": {
+      "Donor": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "blood_type": { "type": "string" },
+          "city": { "type": "string" },
+          "phone": { "type": "string" },
+          "last_donation_date": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      }
+    }
+  }
+}
