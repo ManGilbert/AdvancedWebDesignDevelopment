@@ -2,7 +2,7 @@ import random
 
 class NumberChallenge:
     def __init__(self):
-        self.secret_value = random.randint(1, 100)
+        self.secret_value = random.randint(5, 5000)
         self.max_trials = 5
 
     def compare_values(self, user_value):

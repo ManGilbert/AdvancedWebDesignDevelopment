@@ -1,18 +1,19 @@
 class GradeSystem:
     def __init__(self):
-        pass
+        self.thresholds = [40, 50, 60, 70]  
+        self.classes = [
+            "Fail",
+            "Third Class",
+            "Second Class Lower",
+            "Second Class Upper",
+            "First Class"
+        ]
 
     def calculate_grade(self, score):
-        if score >= 90:
-            return "A"
-        elif score >= 80:
-            return "B"
-        elif score >= 70:
-            return "C"
-        elif score >= 60:
-            return "D"
-        else:
-            return "F"
+        for i, t in enumerate(reversed(self.thresholds)):
+            if score >= t:
+                return self.classes[-(i + 1)]
+        return self.classes[0]
 
     def start(self):
         print("=== Grade Calculator ===")
