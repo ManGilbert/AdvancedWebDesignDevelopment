@@ -1,0 +1,42 @@
+[
+    {
+        "id": 1,
+        "firstname": "John",
+        "lastname": "Doe",
+        "rollnumber": "CS001",
+        "age": 20,
+        "department": "Computer Science"
+    },
+    {
+        "id": 2,
+        "firstname": "Alice",
+        "lastname": "Smith",
+        "rollnumber": "IT002",
+        "age": 22,
+        "department": "Information Technology"
+    },
+    {
+        "id": 3,
+        "firstname": "Kwizera",
+        "lastname": "Cedrick",
+        "rollnumber": "CSSE",
+        "age": 25,
+        "department": "Data Science"
+    },
+    {
+        "id": 5,
+        "firstname": null,
+        "lastname": null,
+        "rollnumber": null,
+        "age": null,
+        "department": null
+    },
+    {
+        "id": 6,
+        "firstname": "Uwabeza",
+        "lastname": "Gaella",
+        "rollnumber": "2022",
+        "age": 22,
+        "department": "CSSE"
+    }
+]
