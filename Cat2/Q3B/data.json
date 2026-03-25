@@ -1,0 +1,33 @@
+[
+    {
+        "name": "Kwizera Cedrick",
+        "username": "Admin",
+        "email": "cedrick@gmail.com",
+        "address": {
+            "street": "Default",
+            "suite": "Apt",
+            "city": "Kigali",
+            "zipcode": "0000",
+            "geo": {
+                "lat": "0",
+                "lng": "0"
+            }
+        },
+        "id": 1
+    },
+    {
+        "username": "maganza1",
+        "email": "magaza@gmail.com",
+        "address": {
+            "street": "Kigali",
+            "suite": "kigali",
+            "city": "Kigali",
+            "zipcode": "20093",
+            "geo": {
+                "lat": "12",
+                "lng": "12"
+            }
+        },
+        "id": 2
+    }
+]
