@@ -1,9 +1,221 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Home</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ULK Student Voting Portal</title>
+    <style>
+        :root {
+            --ulk-red: #a32020;
+            --ulk-gold: #d8b24c;
+            --ulk-ink: #14213d;
+            --ulk-cream: #f8f4eb;
+            --ulk-white: #ffffff;
+            --ulk-green: #1f6f43;
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            background:
+                radial-gradient(circle at top right, rgba(216, 178, 76, 0.22), transparent 28%),
+                linear-gradient(180deg, #fffdf9 0%, #f4eee3 100%);
+            color: var(--ulk-ink);
+        }
+        .hero {
+            padding: 56px 24px 24px;
+            background: linear-gradient(135deg, rgba(163, 32, 32, 0.95), rgba(20, 33, 61, 0.98));
+            color: var(--ulk-white);
+        }
+        .hero-inner, .content { max-width: 1160px; margin: 0 auto; }
+        .eyebrow {
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            color: #f6dda0;
+        }
+        h1 { margin: 12px 0; font-size: clamp(2rem, 4vw, 4rem); }
+        .subtitle { max-width: 800px; line-height: 1.6; font-size: 1.05rem; }
+        .top-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            display: inline-block;
+            text-decoration: none;
+            padding: 12px 18px;
+            border-radius: 999px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-primary { background: var(--ulk-gold); color: #311f00; }
+        .btn-secondary { background: rgba(255,255,255,0.12); color: white; border: 1px solid rgba(255,255,255,0.22); }
+        .content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 28px;
+            padding: 30px 24px 50px;
+        }
+        .panel {
+            background: rgba(255,255,255,0.92);
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: 0 18px 40px rgba(20, 33, 61, 0.08);
+        }
+        .post-card {
+            border: 1px solid rgba(20, 33, 61, 0.08);
+            border-radius: 20px;
+            padding: 22px;
+            margin-top: 18px;
+            background: #fffefa;
+        }
+        .meta {
+            color: #5f6d82;
+            font-size: 0.93rem;
+            margin-bottom: 10px;
+        }
+        .vote-options {
+            display: grid;
+            gap: 8px;
+            margin: 14px 0;
+        }
+        .vote-form input[type="text"],
+        .vote-form input[type="email"] {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 1px solid #cfd7e3;
+            margin-bottom: 10px;
+            font: inherit;
+        }
+        .vote-form ul {
+            list-style: none;
+            padding: 0;
+            margin: 8px 0 14px;
+        }
+        .vote-form li {
+            padding: 10px 12px;
+            background: var(--ulk-cream);
+            border-radius: 12px;
+            margin-bottom: 8px;
+        }
+        .progress {
+            height: 10px;
+            background: #eadfca;
+            border-radius: 999px;
+            overflow: hidden;
+            display: flex;
+            margin: 12px 0 8px;
+        }
+        .progress-a { background: var(--ulk-red); }
+        .progress-b { background: var(--ulk-green); }
+        .message-list {
+            margin-bottom: 18px;
+        }
+        .message {
+            padding: 12px 14px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            background: #edf5ff;
+        }
+        .small-link { color: var(--ulk-red); text-decoration: none; font-weight: bold; }
+        @media (max-width: 900px) {
+            .content { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello, Django is working </h1>
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="eyebrow">ULK Student Governance</div>
+            <h1>Leader posts, student votes, one clear portal.</h1>
+            <p class="subtitle">
+                This voting portal is structured around the way ULK communicates with students:
+                leader announcements are published first, then students respond by voting on the active post.
+            </p>
+            <div class="top-actions">
+                <a class="btn btn-primary" href="/leader/login/">Leader login</a>
+                <a class="btn btn-secondary" href="https://ulk.ac.rw/" target="_blank" rel="noreferrer">Visit ULK website</a>
+            </div>
+        </div>
+    </section>
+
+    <main class="content">
+        <section class="panel">
+            <h2>Active voting posts</h2>
+
+            {% if messages %}
+                <div class="message-list">
+                    {% for message in messages %}
+                        <div class="message">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% for post in active_posts %}
+                <article class="post-card">
+                    <div class="meta">Posted by {{ post.posted_by }} on {{ post.published_at|date:"M d, Y H:i" }}</div>
+                    <h3>{{ post.title }}</h3>
+                    <p><strong>{{ post.summary }}</strong></p>
+                    <p>{{ post.content }}</p>
+
+                    <div class="progress">
+                        {% with total=post.total_votes|default:0 %}
+                            {% if total %}
+                                <div class="progress-a" style="width: {% widthratio post.votes_for_a total 100 %}%"></div>
+                                <div class="progress-b" style="width: {% widthratio post.votes_for_b total 100 %}%"></div>
+                            {% else %}
+                                <div class="progress-a" style="width: 50%"></div>
+                                <div class="progress-b" style="width: 50%"></div>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+                    <div class="meta">
+                        {{ post.option_a }}: {{ post.votes_for_a }} vote{{ post.votes_for_a|pluralize }}
+                        |
+                        {{ post.option_b }}: {{ post.votes_for_b }} vote{{ post.votes_for_b|pluralize }}
+                        |
+                        Total: {{ post.total_votes }}
+                    </div>
+
+                    <form class="vote-form" method="post" action="/vote/{{ post.id }}/">
+                        {% csrf_token %}
+                        <input type="text" name="student_name" placeholder="Student full name" required>
+                        <input type="text" name="registration_number" placeholder="Registration number" required>
+                        <input type="email" name="email" placeholder="ULK email address" required>
+                        <ul class="vote-options">
+                            <li><label><input type="radio" name="choice" value="A" required> {{ post.option_a }}</label></li>
+                            <li><label><input type="radio" name="choice" value="B" required> {{ post.option_b }}</label></li>
+                        </ul>
+                        <button class="btn btn-primary" type="submit">Submit vote</button>
+                    </form>
+                </article>
+            {% empty %}
+                <p>No published leader post is open for voting yet.</p>
+            {% endfor %}
+        </section>
+
+        <aside class="panel">
+            <h2>ULK-style quick panel</h2>
+            <p>This layout takes cues from ULK public communication: announcements, student-facing updates, and clear access points.</p>
+            <p><strong>Leader posting path:</strong><br><a class="small-link" href="/leader/posts/create/">/leader/posts/create/</a></p>
+            <p><strong>Leader dashboard path:</strong><br><a class="small-link" href="/leader/dashboard/">/leader/dashboard/</a></p>
+            <p><strong>Leader login path:</strong><br><a class="small-link" href="/leader/login/">/leader/login/</a></p>
+            <p><strong>Login rule:</strong><br>Use your Django superuser username and password.</p>
+
+            <h3>Recent leader notices</h3>
+            {% for post in recent_posts %}
+                <p>
+                    <strong>{{ post.title }}</strong><br>
+                    <span class="meta">{{ post.get_status_display }} | {{ post.published_at|date:"M d, Y" }}</span>
+                </p>
+            {% empty %}
+                <p>No notices yet.</p>
+            {% endfor %}
+        </aside>
+    </main>
 </body>
 </html>

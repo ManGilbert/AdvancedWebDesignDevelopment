@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leader Dashboard | ULK Voting Portal</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            background: #f7f2e8;
+            color: #14213d;
+        }
+        .wrap { max-width: 1120px; margin: 0 auto; padding: 36px 24px; }
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            text-decoration: none;
+            padding: 12px 18px;
+            border-radius: 999px;
+            font-weight: bold;
+        }
+        .btn-primary { background: #a32020; color: white; }
+        .btn-light { background: white; color: #14213d; }
+        .grid {
+            display: grid;
+            gap: 18px;
+            margin-top: 24px;
+        }
+        .card {
+            background: white;
+            border-radius: 22px;
+            padding: 22px;
+            box-shadow: 0 16px 35px rgba(20, 33, 61, 0.08);
+        }
+        .meta { color: #5f6d82; }
+        .status {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: #f4e4b8;
+            font-size: 0.9rem;
+        }
+        .message {
+            background: #edf5ff;
+            padding: 12px;
+            border-radius: 12px;
+            margin-top: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="topbar">
+            <div>
+                <h1>Leader Dashboard</h1>
+                <p class="meta">Manage ULK voting posts and monitor student participation.</p>
+            </div>
+            <div>
+                <a class="btn btn-primary" href="/leader/posts/create/">Create post</a>
+                <a class="btn btn-light" href="/leader/logout/">Logout</a>
+            </div>
+        </div>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="grid">
+            {% for post in posts %}
+                <div class="card">
+                    <div class="status">{{ post.get_status_display }}</div>
+                    <h2>{{ post.title }}</h2>
+                    <p><strong>{{ post.summary }}</strong></p>
+                    <p>{{ post.content }}</p>
+                    <p class="meta">By {{ post.posted_by }} | Published {{ post.published_at|date:"M d, Y H:i" }}</p>
+                    <p class="meta">
+                        {{ post.option_a }}: {{ post.votes_for_a }} |
+                        {{ post.option_b }}: {{ post.votes_for_b }} |
+                        Total: {{ post.total_votes }}
+                    </p>
+                    <a class="btn btn-light" href="/leader/posts/{{ post.id }}/edit/">Edit post</a>
+                </div>
+            {% empty %}
+                <div class="card">
+                    <h2>No posts yet</h2>
+                    <p>Create the first leader post to start student voting.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
