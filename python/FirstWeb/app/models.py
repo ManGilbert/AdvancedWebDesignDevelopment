@@ -1,63 +1,81 @@
+import datetime
+
 from django.db import models
 from django.utils import timezone
 
 
-class LeaderPost(models.Model):
+class Question(models.Model):
     STATUS_CHOICES = [
         ("draft", "Draft"),
         ("published", "Published"),
         ("closed", "Closed"),
     ]
 
-    title = models.CharField(max_length=200)
-    summary = models.CharField(max_length=255)
-    content = models.TextField()
-    option_a = models.CharField(max_length=120, default="Approve")
-    option_b = models.CharField(max_length=120, default="Reject")
+    question_text = models.CharField(max_length=200)
+    pub_date = models.DateTimeField("date published")
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="draft")
-    posted_by = models.CharField(max_length=120, default="ULK Student Leader")
-    published_at = models.DateTimeField(default=timezone.now)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    posted_by = models.CharField(max_length=120, default="ULK Poll Manager")
 
     class Meta:
-        ordering = ["-published_at", "-created_at"]
+        ordering = ["-pub_date"]
 
     def __str__(self):
-        return self.title
-
-    @property
-    def is_open(self):
-        return self.status == "published"
+        return self.question_text
 
     @property
     def total_votes(self):
-        return self.votes.count()
+        return sum(choice.votes for choice in self.choices.all())
+
+    @property
+    def is_open(self):
+        return self.status == "published" and self.pub_date <= timezone.now()
+
+    @property
+    def lead_choice(self):
+        return self.choices.order_by("-votes", "choice_text").first()
+
+    @property
+    def total_responses(self):
+        return self.vote_records.count()
+
+    def was_published_recently(self):
+        now = timezone.now()
+        return now - datetime.timedelta(days=1) <= self.pub_date <= now
 
 
-class Vote(models.Model):
-    CHOICE_A = "A"
-    CHOICE_B = "B"
-    CHOICE_CHOICES = [
-        (CHOICE_A, "Option A"),
-        (CHOICE_B, "Option B"),
-    ]
+Question.was_published_recently.admin_order_field = "pub_date"
+Question.was_published_recently.boolean = True
+Question.was_published_recently.short_description = "Published recently?"
 
-    post = models.ForeignKey(LeaderPost, on_delete=models.CASCADE, related_name="votes")
+
+class Choice(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name="choices")
+    choice_text = models.CharField(max_length=200)
+    votes = models.IntegerField(default=0)
+
+    class Meta:
+        ordering = ["id"]
+
+    def __str__(self):
+        return self.choice_text
+
+
+class VoteRecord(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name="vote_records")
+    choice = models.ForeignKey(Choice, on_delete=models.CASCADE, related_name="vote_records")
     student_name = models.CharField(max_length=120)
     registration_number = models.CharField(max_length=50)
     email = models.EmailField()
-    choice = models.CharField(max_length=1, choices=CHOICE_CHOICES)
     voted_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         ordering = ["-voted_at"]
         constraints = [
             models.UniqueConstraint(
-                fields=["post", "registration_number"],
-                name="unique_vote_per_post_and_registration_number",
+                fields=["question", "registration_number"],
+                name="unique_vote_per_question_and_registration_number",
             )
         ]
 
     def __str__(self):
-        return f"{self.registration_number} - {self.post.title}"
+        return f"{self.registration_number} - {self.question.question_text}"

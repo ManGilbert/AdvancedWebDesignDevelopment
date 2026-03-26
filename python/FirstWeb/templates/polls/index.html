@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block title %}ULK Polls{% endblock %}
+
+{% block content %}
+<section class="hero py-5">
+    <div class="container">
+        <div class="row g-4 align-items-center">
+            <div class="col-lg-7">
+                <span class="badge badge-ulk rounded-pill px-3 py-2 mb-3">
+                    <i class="bi bi-megaphone-fill me-2"></i>Official student polling
+                </span>
+                <h1 class="display-5 fw-bold">Welcome to the ULK polling platform</h1>
+                <p class="lead mb-4">Built around the Django tutorial poll flow: latest questions, detail page, results page, and vote action, then styled to feel close to ULK e-learning.</p>
+                <div class="d-flex flex-wrap gap-2">
+                    <a class="btn btn-light btn-lg" href="{% url 'polls:leader_login' %}">
+                        <i class="bi bi-box-arrow-in-right me-2"></i>Manager login
+                    </a>
+                    <a class="btn btn-outline-light btn-lg" href="/admin/">
+                        <i class="bi bi-gear me-2"></i>Django admin
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="hero-card p-4 text-dark">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <i class="bi bi-bell-fill fs-2 text-danger"></i>
+                        <div>
+                            <div class="text-uppercase small text-muted">Latest announcement</div>
+                            <div class="fw-semibold">{{ latest_announcement.question_text|default:"No published poll yet" }}</div>
+                        </div>
+                    </div>
+                    <p class="mb-0">The e-learning site highlights contact info, announcements, and academic structure. This portal mirrors that feel while keeping the polling flow simple for students.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h2 class="section-title mb-0">Latest Poll Questions</h2>
+                    <span class="text-muted small"><i class="bi bi-clock-history me-1"></i>Newest first</span>
+                </div>
+
+                {% if latest_question_list %}
+                    <div class="row g-4">
+                        {% for question in latest_question_list %}
+                            <div class="col-12">
+                                <div class="poll-card card h-100">
+                                    <div class="card-body p-4">
+                                        <div class="d-flex justify-content-between flex-wrap gap-2 mb-2">
+                                            <span class="badge text-bg-light border">{{ question.get_status_display }}</span>
+                                            <span class="text-muted small"><i class="bi bi-calendar-event me-1"></i>{{ question.pub_date|date:"M d, Y H:i" }}</span>
+                                        </div>
+                                        <h3 class="h4">{{ question.question_text }}</h3>
+                                        <p class="text-muted mb-3"><i class="bi bi-person-badge me-2"></i>Posted by {{ question.posted_by }}</p>
+                                        <div class="d-flex flex-wrap gap-2">
+                                            <a class="btn btn-ulk" href="{% url 'polls:detail' question.id %}">
+                                                <i class="bi bi-hand-index-thumb me-2"></i>Vote now
+                                            </a>
+                                            <a class="btn btn-outline-ulk" href="{% url 'polls:results' question.id %}">
+                                                <i class="bi bi-bar-chart-line me-2"></i>View results
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="alert alert-warning border-0 shadow-sm">No polls are available.</div>
+                {% endif %}
+            </div>
+
+            <div class="col-lg-4">
+                <div class="info-card card mb-4">
+                    <div class="card-body p-4">
+                        <h3 class="h5 section-title"><i class="bi bi-info-circle-fill me-2"></i>Poll manager paths</h3>
+                        <p class="mb-2"><strong>Login:</strong> <code>/leader/login/</code></p>
+                        <p class="mb-2"><strong>Dashboard:</strong> <code>/leader/dashboard/</code></p>
+                        <p class="mb-0"><strong>Create poll:</strong> <code>/leader/polls/create/</code></p>
+                    </div>
+                </div>
+
+                <div class="info-card card mb-4">
+                    <div class="card-body p-4">
+                        <h3 class="h5 section-title"><i class="bi bi-journal-text me-2"></i>Info</h3>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-2"><i class="bi bi-check2-circle me-2 text-success"></i>Students vote on one question at a time.</li>
+                            <li class="mb-2"><i class="bi bi-check2-circle me-2 text-success"></i>Each registration number can vote once per poll.</li>
+                            <li><i class="bi bi-check2-circle me-2 text-success"></i>Superusers manage polls using the current login flow.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="info-card card">
+                    <div class="card-body p-4">
+                        <h3 class="h5 section-title"><i class="bi bi-headset me-2"></i>Contact</h3>
+                        <p class="mb-1">Phone: +250787700972</p>
+                        <p class="mb-1">Phone: +250785390630</p>
+                        <p class="mb-0">Email: support.elearning@ulk.ac.rw</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

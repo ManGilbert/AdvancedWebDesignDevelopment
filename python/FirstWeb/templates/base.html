@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}ULK Polling{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        :root {
+            --ulk-primary: #8f1d1d;
+            --ulk-accent: #d7a93f;
+            --ulk-navy: #1f2f56;
+            --ulk-bg: #f8f3ea;
+        }
+        body {
+            background: linear-gradient(180deg, #fcfaf6 0%, #f6efdf 100%);
+            color: #24324a;
+        }
+        .top-strip {
+            background: var(--ulk-navy);
+            color: #fff;
+            font-size: 0.95rem;
+        }
+        .navbar-brand span {
+            color: var(--ulk-accent);
+        }
+        .btn-ulk {
+            background: var(--ulk-primary);
+            border-color: var(--ulk-primary);
+            color: #fff;
+        }
+        .btn-ulk:hover,
+        .btn-ulk:focus {
+            background: #781515;
+            border-color: #781515;
+            color: #fff;
+        }
+        .btn-outline-ulk {
+            color: var(--ulk-primary);
+            border-color: var(--ulk-primary);
+        }
+        .btn-outline-ulk:hover {
+            background: var(--ulk-primary);
+            color: #fff;
+        }
+        .hero {
+            background:
+                linear-gradient(rgba(31, 47, 86, 0.86), rgba(143, 29, 29, 0.78)),
+                linear-gradient(120deg, #a63737, #1f2f56);
+            color: #fff;
+        }
+        .hero-card,
+        .info-card,
+        .poll-card {
+            border: 0;
+            border-radius: 1.25rem;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 1rem 2rem rgba(31, 47, 86, 0.08);
+        }
+        .section-title {
+            color: var(--ulk-primary);
+            font-weight: 700;
+        }
+        .badge-ulk {
+            background: rgba(215, 169, 63, 0.18);
+            color: #7b5707;
+        }
+        footer {
+            background: var(--ulk-navy);
+            color: rgba(255, 255, 255, 0.92);
+        }
+    </style>
+</head>
+<body>
+    <div class="top-strip py-2">
+        <div class="container d-flex flex-wrap justify-content-between gap-2">
+            <div><i class="bi bi-telephone-fill me-2"></i>+250787700972, +250785390630</div>
+            <div><i class="bi bi-envelope-fill me-2"></i>support.elearning@ulk.ac.rw</div>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="{% url 'polls:index' %}">
+                <i class="bi bi-mortarboard-fill me-2 text-danger"></i>ULK <span>Polling Portal</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navMenu">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'polls:index' %}">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="https://ulk.ac.rw/" target="_blank" rel="noreferrer">ULK Website</a></li>
+                    <li class="nav-item"><a class="nav-link" href="https://elearningv2.ulk.ac.rw/" target="_blank" rel="noreferrer">E-learning</a></li>
+                </ul>
+                <div class="d-flex gap-2">
+                    <a class="btn btn-outline-ulk" href="{% url 'polls:leader_login' %}">
+                        <i class="bi bi-shield-lock me-1"></i>Poll Manager
+                    </a>
+                    <a class="btn btn-ulk" href="/admin/">
+                        <i class="bi bi-sliders me-1"></i>Admin
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    {% if messages %}
+        <div class="container pt-3">
+            {% for message in messages %}
+                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+
+    <footer class="py-4 mt-5">
+        <div class="container d-flex flex-column flex-lg-row justify-content-between gap-3">
+            <div>
+                <div class="fw-semibold">ULK Polling Portal</div>
+                <div class="small">Inspired by the ULK e-learning information layout and adapted to the Django polls workflow.</div>
+            </div>
+            <div class="small">
+                Kigali-Gisozi-Western-Rubavu-Rwanda<br>
+                support.elearning@ulk.ac.rw
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

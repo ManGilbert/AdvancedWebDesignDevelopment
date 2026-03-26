@@ -1,16 +1,27 @@
 from django.contrib import admin
-from .models import LeaderPost, Vote
+
+from .models import Choice, Question, VoteRecord
 
 
-@admin.register(LeaderPost)
-class LeaderPostAdmin(admin.ModelAdmin):
-    list_display = ("title", "posted_by", "status", "published_at", "total_votes")
-    list_filter = ("status", "published_at")
-    search_fields = ("title", "summary", "posted_by")
+class ChoiceInline(admin.TabularInline):
+    model = Choice
+    extra = 2
 
 
-@admin.register(Vote)
-class VoteAdmin(admin.ModelAdmin):
-    list_display = ("post", "student_name", "registration_number", "email", "choice", "voted_at")
-    list_filter = ("choice", "voted_at")
-    search_fields = ("student_name", "registration_number", "email", "post__title")
+@admin.register(Question)
+class QuestionAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None, {"fields": ["question_text"]}),
+        ("Publication", {"fields": ["pub_date", "status", "posted_by"]}),
+    ]
+    inlines = [ChoiceInline]
+    list_display = ("question_text", "pub_date", "status", "posted_by", "was_published_recently")
+    list_filter = ["pub_date", "status"]
+    search_fields = ["question_text", "posted_by"]
+
+
+@admin.register(VoteRecord)
+class VoteRecordAdmin(admin.ModelAdmin):
+    list_display = ("question", "choice", "student_name", "registration_number", "email", "voted_at")
+    list_filter = ("voted_at",)
+    search_fields = ("student_name", "registration_number", "email", "question__question_text")

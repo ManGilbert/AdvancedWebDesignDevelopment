@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Vote | ULK Polls{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="poll-card card">
+                    <div class="card-body p-4 p-lg-5">
+                        <div class="d-flex justify-content-between flex-wrap gap-2 mb-3">
+                            <span class="badge badge-ulk rounded-pill px-3 py-2">Active Poll</span>
+                            <span class="text-muted"><i class="bi bi-calendar-event me-1"></i>{{ question.pub_date|date:"M d, Y H:i" }}</span>
+                        </div>
+                        <h1 class="h2 mb-2">{{ question.question_text }}</h1>
+                        <p class="text-muted"><i class="bi bi-person-badge me-2"></i>Posted by {{ question.posted_by }}</p>
+
+                        {% if error_message %}
+                            <div class="alert alert-danger">{{ error_message }}</div>
+                        {% endif %}
+
+                        <form action="{% url 'polls:vote' question.id %}" method="post" class="row g-3">
+                            {% csrf_token %}
+                            <div class="col-md-6">
+                                <label class="form-label" for="{{ form.student_name.id_for_label }}">Student name</label>
+                                {{ form.student_name }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="{{ form.registration_number.id_for_label }}">Registration number</label>
+                                {{ form.registration_number }}
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label" for="{{ form.email.id_for_label }}">Email</label>
+                                {{ form.email }}
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label d-block">Select one choice</label>
+                                {% for radio in form.choice %}
+                                    <div class="form-check border rounded-4 p-3 mb-2 bg-light">
+                                        {{ radio.tag }}
+                                        <label class="form-check-label ms-2" for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <div class="col-12 d-flex flex-wrap gap-2">
+                                <button class="btn btn-ulk" type="submit">
+                                    <i class="bi bi-check2-square me-2"></i>Submit vote
+                                </button>
+                                <a class="btn btn-outline-ulk" href="{% url 'polls:results' question.id %}">
+                                    <i class="bi bi-bar-chart-line me-2"></i>See results
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

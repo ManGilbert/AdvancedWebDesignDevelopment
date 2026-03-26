@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Results | ULK Polls{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="poll-card card">
+                    <div class="card-body p-4 p-lg-5">
+                        <div class="d-flex justify-content-between flex-wrap gap-2 mb-3">
+                            <h1 class="h2 mb-0">{{ question.question_text }}</h1>
+                            <span class="badge text-bg-light border"><i class="bi bi-people-fill me-1"></i>{{ question.total_responses }} response{{ question.total_responses|pluralize }}</span>
+                        </div>
+
+                        {% for choice in question.choices.all %}
+                            <div class="mb-4">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <strong>{{ choice.choice_text }}</strong>
+                                    <span>{{ choice.votes }} vote{{ choice.votes|pluralize }}</span>
+                                </div>
+                                <div class="progress" style="height: 14px;">
+                                    {% if question.total_votes %}
+                                        <div class="progress-bar" role="progressbar" style="width: {% widthratio choice.votes question.total_votes 100 %}%; background-color: #8f1d1d;"></div>
+                                    {% else %}
+                                        <div class="progress-bar" role="progressbar" style="width: 0%; background-color: #8f1d1d;"></div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% empty %}
+                            <div class="alert alert-warning">No choices are available for this question yet.</div>
+                        {% endfor %}
+
+                        {% if question.lead_choice %}
+                            <div class="alert alert-light border">
+                                <i class="bi bi-trophy-fill text-warning me-2"></i>Current leading choice: <strong>{{ question.lead_choice.choice_text }}</strong>
+                            </div>
+                        {% endif %}
+
+                        <div class="d-flex flex-wrap gap-2">
+                            <a class="btn btn-ulk" href="{% url 'polls:detail' question.id %}">
+                                <i class="bi bi-arrow-repeat me-2"></i>Vote page
+                            </a>
+                            <a class="btn btn-outline-ulk" href="{% url 'polls:index' %}">
+                                <i class="bi bi-house-door me-2"></i>Back to polls
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,13 +1,17 @@
 from django.urls import path
+
 from . import views
 
+app_name = "polls"
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('vote/<int:post_id>/', views.vote_on_post, name='vote_on_post'),
-    path('leader/login/', views.leader_login, name='leader_login'),
-    path('leader/logout/', views.leader_logout, name='leader_logout'),
-    path('leader/dashboard/', views.leader_dashboard, name='leader_dashboard'),
-    path('leader/posts/create/', views.leader_post_create, name='leader_post_create'),
-    path('leader/posts/<int:post_id>/edit/', views.leader_post_edit, name='leader_post_edit'),
+    path("", views.index, name="index"),
+    path("<int:question_id>/", views.detail, name="detail"),
+    path("<int:question_id>/results/", views.results, name="results"),
+    path("<int:question_id>/vote/", views.vote, name="vote"),
+    path("leader/login/", views.leader_login, name="leader_login"),
+    path("leader/logout/", views.leader_logout, name="leader_logout"),
+    path("leader/dashboard/", views.leader_dashboard, name="leader_dashboard"),
+    path("leader/polls/create/", views.leader_question_create, name="leader_question_create"),
+    path("leader/polls/<int:question_id>/edit/", views.leader_question_edit, name="leader_question_edit"),
 ]
