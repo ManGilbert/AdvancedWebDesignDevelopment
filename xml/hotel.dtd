@@ -1,0 +1,22 @@
+﻿<!ELEMENT hotel (name, address, contact, description, amenities, rooms)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT address (street, city, state, zipcode, country)>
+<!ELEMENT street (#PCDATA)>
+<!ELEMENT city (#PCDATA)>
+<!ELEMENT state (#PCDATA)>
+<!ELEMENT zipcode (#PCDATA)>
+<!ELEMENT country (#PCDATA)>
+<!ELEMENT contact (phone, email, website)>
+<!ELEMENT phone (#PCDATA)>
+<!ELEMENT email (#PCDATA)>
+<!ELEMENT website (#PCDATA)>
+<!ELEMENT description (#PCDATA)>
+<!ELEMENT amenities (amenity+)>
+<!ELEMENT amenity (#PCDATA)>
+<!ELEMENT rooms (room+)>
+<!ELEMENT room (type, capacity, price, available)>
+<!ATTLIST room id ID #REQUIRED>
+<!ELEMENT type (#PCDATA)>
+<!ELEMENT capacity (#PCDATA)>
+<!ELEMENT price (#PCDATA)>
+<!ELEMENT available (#PCDATA)>
