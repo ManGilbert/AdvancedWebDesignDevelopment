@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hotel>
+    <name>Grand Plaza Hotel</name>
+    <address>
+        <street>123 Main Street</street>
+        <city>New York</city>
+        <state>NY</state>
+        <zipcode>10001</zipcode>
+        <country>USA</country>
+    </address>
+    <contact>
+        <phone>+1-212-555-1234</phone>
+        <email>info@grandplazahotel.com</email>
+        <website>www.grandplazahotel.com</website>
+    </contact>
+    <description>A luxurious hotel in the heart of the city, offering world-class amenities and exceptional service.</description>
+    <amenities>
+        <amenity>Free Wi-Fi</amenity>
+        <amenity>Fitness Center</amenity>
+        <amenity>Swimming Pool</amenity>
+        <amenity>Restaurant</amenity>
+        <amenity>Room Service</amenity>
+        <amenity>Concierge</amenity>
+    </amenities>
+    <rooms>
+        <room id="101">
+            <type>Standard</type>
+            <capacity>2</capacity>
+            <price>150.00</price>
+            <available>true</available>
+        </room>
+        <room id="102">
+            <type>Deluxe</type>
+            <capacity>2</capacity>
+            <price>200.00</price>
+            <available>true</available>
+        </room>
+        <room id="201">
+            <type>Suite</type>
+            <capacity>4</capacity>
+            <price>350.00</price>
+            <available>false</available>
+        </room>
+    </rooms>
+</hotel>
