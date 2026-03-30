@@ -1,18 +1,26 @@
 ﻿<!ELEMENT school (students, courses, enrollments)>
+
 <!ELEMENT students (student+)>
 <!ELEMENT student (name, email)>
 <!ATTLIST student id ID #REQUIRED>
+
 <!ELEMENT name (first, last)>
 <!ELEMENT first (#PCDATA)>
 <!ELEMENT last (#PCDATA)>
 <!ELEMENT email (#PCDATA)>
+
 <!ELEMENT courses (course+)>
 <!ELEMENT course (title, instructor, credits)>
 <!ATTLIST course id ID #REQUIRED>
+
 <!ELEMENT title (#PCDATA)>
 <!ELEMENT instructor (#PCDATA)>
 <!ELEMENT credits (#PCDATA)>
+
 <!ELEMENT enrollments (enrollment+)>
 <!ELEMENT enrollment (grade)>
-<!ATTLIST enrollment studentID IDREF #REQUIRED courseID IDREF #REQUIRED>
+<!ATTLIST enrollment 
+  studentID IDREF #REQUIRED 
+  courseID IDREF #REQUIRED>
+
 <!ELEMENT grade (#PCDATA)>
