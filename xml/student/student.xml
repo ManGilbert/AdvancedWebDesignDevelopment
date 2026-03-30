@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE school SYSTEM "student.dtd">
+<school>
+  <students>
+    <student id="202201">
+      <name>
+        <first>Beni</first>
+        <last>Obed</last>
+      </name>
+      <email>beni.obed@gmail.com</email>
+    </student>
+    <student id="202202">
+      <name>
+        <first>Jean</first>
+        <last>Paul</last>
+      </name>
+      <email>jean.paul@gmail.com</email>
+    </student>
+  </students>
+  <courses>
+    <course id="C101">
+      <title>Intro to XML</title>
+      <lecturer>Solange</lecturer>
+      <credits>10</credits>
+    </course>
+    <course id="C202">
+      <title>Database Systems</title>
+      <lecturer>Pierre</lecturer>
+      <credits>15</credits>
+    </course>
+  </courses>
+  <enrollments>
+    <enrollment studentID="202201" courseID="C101">
+    <grade>A</grade>
+    </enrollment>
+    <enrollment studentID="202201" courseID="C202">
+      <grade>B+</grade>
+    </enrollment>
+    <enrollment studentID="202202" courseID="C101">
+      <grade>A-</grade>
+    </enrollment>
+  </enrollments>
+</school>
