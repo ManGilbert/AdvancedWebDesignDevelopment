@@ -2,47 +2,45 @@
 
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
+    <xs:simpleType name="genderType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Male"/>
+            <xs:enumeration value="Female"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="phoneType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\d{10}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
     <xs:element name="hospital">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="patient" maxOccurs="unbounded">
                     <xs:complexType>
-
                         <xs:sequence>
+
                             <xs:element name="name" type="xs:string"/>
-                            
-                            <xs:element name="gender">
-                                <xs:simpleType>
-                                    <xs:restriction base="xs:string">
-                                        <xs:enumeration value="Male"/>
-                                        <xs:enumeration value="Female"/>
-                                    </xs:restriction>
-                                </xs:simpleType>
-                            </xs:element>
-
+                            <xs:element name="gender" type="genderType"/>
                             <xs:element name="dob" type="xs:date"/>
-
-                            <xs:element name="phone">
-                                <xs:simpleType>
-                                    <xs:restriction base="xs:string">
-                                        <xs:pattern value="\d{10}"/>
-                                    </xs:restriction>
-                                </xs:simpleType>
-                            </xs:element>
+                            <xs:element name="phone" type="phoneType"/>
 
                             <xs:element name="records">
                                 <xs:complexType>
                                     <xs:sequence>
+
                                         <xs:element name="record" minOccurs="1" maxOccurs="unbounded">
                                             <xs:complexType>
-
                                                 <xs:sequence>
+
                                                     <xs:element name="visitDate" type="xs:date"/>
                                                     <xs:element name="doctor" type="xs:string"/>
                                                     <xs:element name="diagnosis" type="xs:string"/>
                                                     <xs:element name="treatment" type="xs:string"/>
 
-                                                    <xs:element name="prescriptions">
+                                                    <xs:element name="prescription">
                                                         <xs:complexType>
                                                             <xs:sequence>
                                                                 <xs:element name="medicine" type="xs:string" maxOccurs="unbounded"/>
@@ -61,23 +59,20 @@
                                                     </xs:element>
 
                                                 </xs:sequence>
-
                                             </xs:complexType>
                                         </xs:element>
+
                                     </xs:sequence>
                                 </xs:complexType>
                             </xs:element>
 
                         </xs:sequence>
 
-                        <!-- Unique Patient ID -->
                         <xs:attribute name="id" type="xs:integer" use="required"/>
-
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
 
-            <!-- Enforce unique patient IDs -->
             <xs:unique name="uniquePatientID">
                 <xs:selector xpath="patient"/>
                 <xs:field xpath="@id"/>
