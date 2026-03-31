@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="hotel">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="name" type="xs:string"/>
+        <xs:element name="address">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="street" type="xs:string"/>
+              <xs:element name="city" type="xs:string"/>
+              <xs:element name="state" type="xs:string"/>
+              <xs:element name="zipcode" type="xs:string"/>
+              <xs:element name="country" type="xs:string"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="contact">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="phone" type="xs:string"/>
+              <xs:element name="email" type="xs:string"/>
+              <xs:element name="website" type="xs:string"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="description" type="xs:string"/>
+        <xs:element name="amenities">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="amenity" type="xs:string" maxOccurs="unbounded"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="rooms">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="room" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="type" type="xs:string"/>
+                    <xs:element name="capacity" type="xs:string"/>
+                    <xs:element name="price" type="xs:string"/>
+                    <xs:element name="available" type="xs:string"/>
+                  </xs:sequence>
+                  <xs:attribute name="id" type="xs:ID" use="required"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

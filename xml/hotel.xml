@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hotel SYSTEM "hotel.dtd">
-<hotel>
+<hotel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="hotel.xsd">
     <name>Grand Plaza Hotel</name>
     <address>
         <street>123 Main Street</street>
