@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hospital xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="hospital.xsd">
+
+    <patient id="1">
+        <name>John Doe</name>
+        <gender>Male</gender>
+        <dob>1990-05-12</dob>
+        <phone>0781234567</phone>
+
+        <records>
+            <record>
+                <visitDate>2025-01-10</visitDate>
+                <doctor>Dr. Smith</doctor>
+                <diagnosis>Flu</diagnosis>
+                <treatment>Rest and hydration</treatment>
+                <prescriptions>
+                    <medicine>Paracetamol</medicine>
+                    <medicine>Vitamin C</medicine>
+                </prescriptions>
+                <billing>
+                    <consultationFee>20.5</consultationFee>
+                    <medicationCost>10.0</medicationCost>
+                    <totalCost>30.5</totalCost>
+                </billing>
+            </record>
+
+            <record>
+                <visitDate>2025-02-15</visitDate>
+                <doctor>Dr. Adams</doctor>
+                <diagnosis>Malaria</diagnosis>
+                <treatment>Antimalarial drugs</treatment>
+                <prescriptions>
+                    <medicine>Coartem</medicine>
+                </prescriptions>
+                <billing>
+                    <consultationFee>25.0</consultationFee>
+                    <medicationCost>15.0</medicationCost>
+                    <totalCost>40.0</totalCost>
+                </billing>
+            </record>
+        </records>
+    </patient>
+
+    <patient id="2">
+        <name>Jane Smith</name>
+        <gender>Female</gender>
+        <dob>1985-09-20</dob>
+        <phone>0798765432</phone>
+
+        <records>
+            <record>
+                <visitDate>2025-03-01</visitDate>
+                <doctor>Dr. Brown</doctor>
+                <diagnosis>Headache</diagnosis>
+                <treatment>Pain relief</treatment>
+                <prescriptions>
+                    <medicine>Ibuprofen</medicine>
+                </prescriptions>
+                <billing>
+                    <consultationFee>15.0</consultationFee>
+                    <medicationCost>5.0</medicationCost>
+                    <totalCost>20.0</totalCost>
+                </billing>
+            </record>
+
+            <record>
+                <visitDate>2025-03-15</visitDate>
+                <doctor>Dr. Green</doctor>
+                <diagnosis>Allergy</diagnosis>
+                <treatment>Antihistamines</treatment>
+                <prescriptions>
+                    <medicine>Loratadine</medicine>
+                </prescriptions>
+                <billing>
+                    <consultationFee>18.0</consultationFee>
+                    <medicationCost>7.0</medicationCost>
+                    <totalCost>25.0</totalCost>
+                </billing>
+            </record>
+        </records>
+    </patient>
+
+    <patient id="3">
+        <name>Eric Johnson</name>
+        <gender>Male</gender>
+        <dob>2000-12-01</dob>
+        <phone>0785551234</phone>
+
+        <records>
+            <record>
+                <visitDate>2025-01-20</visitDate>
+                <doctor>Dr. White</doctor>
+                <diagnosis>Cold</diagnosis>
+                <treatment>Fluids and rest</treatment>
+                <prescriptions>
+                    <medicine>Cough Syrup</medicine>
+                </prescriptions>
+                <billing>
+                    <consultationFee>12.0</consultationFee>
+                    <medicationCost>6.0</medicationCost>
+                    <totalCost>18.0</totalCost>
+                </billing>
+            </record>
+
+            <record>
+                <visitDate>2025-02-25</visitDate>
+                <doctor>Dr. Black</doctor>
+                <diagnosis>Infection</diagnosis>
+                <treatment>Antibiotics</treatment>
+                <prescriptions>
+                    <medicine>Amoxicillin</medicine>
+                </prescriptions>
+                <billing>
+                    <consultationFee>22.0</consultationFee>
+                    <medicationCost>12.0</medicationCost>
+                    <totalCost>34.0</totalCost>
+                </billing>
+            </record>
+        </records>
+    </patient>
+
+</hospital>
